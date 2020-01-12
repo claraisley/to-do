@@ -2,13 +2,13 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const sass = require("node-sass-middleware");
+const app = express();
+const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 
@@ -53,55 +53,88 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", (request, response) => {
+  response.render("index");
 });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-// TODO: Delete before committing
-// Show login page
-app.get('/index', (req, res) => {
-  res.render('login'); //mudar para index depois
+//GET login deleter depois
+app.get('/login', (request, response) => {
+  response.render('login'); //mudar para index depois
 });
 
-// handle login request
-app.post('/login',(req, res) => {
-  // get data from form
-  // res.json({ email: req.body.email, password: req.body.password });
-
+//POST login
+app.post('/login', (request, response) => {
   // check if user exists in database
   db.query(`SELECT email, password
   FROM users
-  WHERE email = $1;`,[req.body.email])
+  WHERE email = $1;`, [request.body.email])
     .then(data => {
       const user = data.rows[0];
       if (!user) {
-        res.statusCode = 403;
-        res.end("403 Forbidden. E-mail cannot be found");
-      } else if (!bcrypt.compareSync(req.body.password, user.password)) {
-        res.statusCode = 403;
-        res.end("403 Forbidden. Wrong password");
+        response.statusCode = 403;
+        response.end("403 Forbidden. E-mail cannot be found");
+      } else if (!bcrypt.compareSync(request.body.password, user.password)) {
+        response.statusCode = 403;
+        response.end("403 Forbidden. Wrong password");
       } else {
-        res.redirect('/to-do-list');
+        // eslint-disable-next-line camelcase
+        request.session.user_id = user.id;
+        response.redirect('/to-do-list');
       }
-      // if user, Check password
-      // if valid, redirect to home
-      // if invalid, render login page and show error
-      res.json({ users });
+      response.json({ user });
     })
     .catch(err => {
       // render login with error
-      res
+      response
         .status(500)
         .json({ error: err.message });
     });
 });
 
+//GET register DELETAR depois
+app.get('/register', (request, response) => {
+  response.render('register'); //mudar para index depois
+});
+
+//POST register
+app.post('/register', (request, response) => {
+  const email = request.body.email;
+  const password = request.body.password;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  if (email === "" || password === "") {
+    response.statusCode = 400;
+    response.end("400 Bad request. Missing email or password");
+    return;
+  }
+  db.query(`SELECT email
+      FROM users
+      WHERE email = $1;`, [request.body.email])
+    .then(data => {
+      const user = data.rows[0];
+      if (user) {
+        response.statusCode = 400;
+        response.end("400 Bad request. Email already registered");
+      } else {
+        db.query(`INSERT INTO users(email, password) VALUES($1,$2) RETURNING *;`,
+          [request.body.email, hashedPassword])
+          .then(data => {
+            const newUser = data.rows[0];
+
+            // eslint-disable-next-line camelcase
+            request.session.user_id = newUser.id;
+            response.redirect('/to-do-list');
+          });
+      }
+    });
+});
+
 
 // Get all users from database and return as json
-app.get("/users", (req, res) => {
+app.get("/users", (request, response) => {
 
 });
