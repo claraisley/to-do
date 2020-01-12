@@ -15,6 +15,7 @@ const bcrypt = require('bcrypt');
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
+const fetchMovie = require('./lib/movies-fetcher.js');
 const db = new Pool(dbParams);
 db.connect();
 
@@ -132,9 +133,29 @@ app.post('/register', (request, response) => {
       }
     });
 });
+//GET to-do-list
+app.get('/to-do-list', (request, response) => {
+  response.render('to-do-list');
+});
+
+//POST to-do-list
+app.post('/create-item', (request, response) => {
+  const item = request.body.item;
+  fetchMovie(item).then(body => {
+    if (body.error === "Movie not found!") {
+      // Not a movie. Now search for Book or something else.
 
 
-// Get all users from database and return as json
-app.get("/users", (request, response) => {
+      // Only for testing
+      response.statusCode = 400;
+      response.end("400 Bad request. This movie not exist");
 
+    } else {
+      response.send(body); //just for test
+
+      // There is a movie with the given name
+      // Save item to the database and assign it to the movies category
+      //to do insert into the database.
+    }
+  });
 });
