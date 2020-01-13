@@ -9,3 +9,28 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.main-container {
+  width: 240px;
+    height: 200px;
+    margin: 20vh auto 2.5vh auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Bottom right text */
+.text-block {
+  position: relative;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.buttons {
+  align-items: center;
+}
