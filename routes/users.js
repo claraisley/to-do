@@ -8,7 +8,9 @@
 const express = require('express');
 const router  = express.Router();
 
+
 module.exports = (db) => {
+  // GET to /users
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -21,5 +23,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
   return router;
 };
