@@ -113,15 +113,15 @@ app.post('/register', (request, response) => {
     return;
   }
   db.query(`SELECT email
-      FROM users
-      WHERE email = $1;`, [request.body.email])
+  FROM users
+  WHERE email = $1;`, [request.body.email])
     .then(data => {
       const user = data.rows[0];
       if (user) {
         response.statusCode = 400;
         response.end("400 Bad request. Email already registered");
       } else {
-        db.query(`INSERT INTO users(email, password) VALUES($1,$2) RETURNING *;`,
+        db.query(`INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
           [request.body.email, hashedPassword])
           .then(data => {
             const newUser = data.rows[0];
@@ -159,14 +159,21 @@ app.post('/create-item', (request, response) => {
       } else if (dataType === 'Book') {
         console.log("book here");
         //send the results to the movie list;
-      } else  {
-        console.log("somenthing else");
+      } else {
+        const assumptions = JSON.parse(body).queryresult.assumptions.values[1].desc;
+        // console.log(assumptions.values[1].desc);
+        // for (let item of assumptions) {
+        if (assumptions.includes('restant' || 'food')) {
+          console.log('found restaurant');
+        } else {
+          console.log('not found the restaurant');
+        }
 
 
         //send the results to the movie list;
-      // There is a movie with the given name
-      // Save item to the database and assign it to the item category
-      //to do insert into the database.
+        // There is a movie with the given name
+        // Save item to the database and assign it to the item category
+        //to do insert into the database.
       }
     }
   });
