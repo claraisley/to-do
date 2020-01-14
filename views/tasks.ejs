@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  
+    <title>Add a task</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/tasks.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+
+    <!-- Oswald font -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700&display=swap" rel="stylesheet">
+  </head>
+
+  <header>
+    <%- include('partials/navbar') %>
+  </header>
+
+  <body>
+  <div class="task-container">
+  <div id="myLists">
+
+    <article id="movies" data-category_id="1">
+      <header>
+        <div>Movies and TV Shows</div>
+      </header>
+      <ul class="lists" id="movies1" data-category_id="1">
+      </ul>
+    </article>
+    <article id="books" data-category_id="2">
+      <header>
+        <div>Books</div>
+      </header>
+      <ul class="lists" id="books1" data-category_id="2"></ul>
+    </article>
+    <article id="restaurants" data-category_id="3">
+      <header>
+        <div>Restaurants</div>
+      </header>
+      <ul class="lists" id="restaurants1" data-category_id="3"></ul>
+    </article>
+    <article id="products" data-category_id="4">
+      <header>
+        <div>Products</div>
+      </header>
+      <ul class="lists" id="products1" data-category_id="4"></ul>
+    </article>
+  </div>
+  </div>
+  </body>
