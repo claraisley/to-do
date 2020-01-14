@@ -11,6 +11,7 @@ const app = express();
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const { walkObject } = require('walk-object')
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -149,23 +150,54 @@ app.get('/to-do-list', (request, response) => {
 //   request.session.user_id = null;
 //   response.redirect('/to-do-list');
 // });
+const foodWords = ['restaurant', 'fast food', 'sandwich'];
+const bookWords = ['Book', "book", "written by", 'author']
+const movieWords = ['AcademyAward', 'Movie']
+
 
 //POST to-do-list
 app.post('/create-item', (request, response) => {
   const item = request.body.input;
   fetchItem(item).then(body => {
+    let megaString = '';
+    console.log(`${item} is the search item `)
+    walkObject(JSON.parse(body).queryresult, ({ value }) => {
+      if (typeof value === 'string') megaString += " " + value
+    })
+
+
+    // console.log(dataType);
+    // if assumptions is true,then check it in descriptions map
+    // or if assumptions, or datatypes is false put it in products
+      // console.log(assumptions)
     if (body.error === "Item not found!") {
       console.log("not found");
-    } else {
-    //   let dataType = JSON.parse(body).queryresult;
-    //   console.log(dataType);
-      // if (dataType === 'Movie') {
+
+    } else if (bookWords.some(substring => {
+
+      if( megaString.includes(substring) ) console.log(substring)
+      return megaString.includes(substring)
+    }
+
+      )) {
+      console.log(`found a book`);
+
+    } else if (movieWords.some(substring => {
+
+      if( megaString.includes(substring) ) console.log(substring)
+      return megaString.includes(substring)
+    }
+
+      )) {
+      console.log(`found a movie`);
       //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
       //     [request.body.input, categories['film_and_tv_series'], request.session.user_id])
       //     .then(data => {
       //       const task = data.rows[0]; //delete after
       //       response.json(task);
       //     });
+      // }
+
       // } else if (dataType === 'Book') {
       //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *`,
       //     [request.body.input, categories['books'], request.session.user_id])
@@ -174,22 +206,21 @@ app.post('/create-item', (request, response) => {
       //       response.json(task);
       //     });
 
-      // } else {
-      const assumptions = JSON.parse(body).queryresult.assumptions;
-      console.log(assumptions);
+    } else if (foodWords.some(substring => megaString.includes(substring))) {
 
+     console.log('found a restaurant');
 
+     } else console.log(`found a product`);
 
-
-
-      //   const foodWords = ['food', 'restaurant', 'dinning', 'fast food'];
+    // }
+     //   const foodWords = ['food', 'restaurant', 'dinning', 'fast food'];
       //   if (foodWords.some(substring => assumptions.includes(substring))) {
       //     console.log('found a restaurant');
       //   } else {
       //     console.log('not found the restaurant');
       //   }
       // }
-    }
-  });
+
+  })
 });
 
