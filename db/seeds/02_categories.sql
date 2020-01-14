@@ -1,4 +1,4 @@
-INSERT INTO categories (name) VALUES ('film_and_tv_series');
-INSERT INTO categories (name) VALUES ('books');
-INSERT INTO categories (name) VALUES ('restaurants');
-INSERT INTO categories (name) VALUES ('products');
+INSERT INTO categories (title) VALUES ('film_and_tv_series');
+INSERT INTO categories (title) VALUES ('books');
+INSERT INTO categories (title) VALUES ('restaurants');
+INSERT INTO categories (title) VALUES ('products');

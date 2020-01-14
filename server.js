@@ -42,14 +42,21 @@ app.use(cookieSession({
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-
 // Note: mount other resources here, using the same pattern above
 
+// Read categories IDs from database
+// This creates an object like { film_and_tv_series: 1, book: 2, ...}
+// const categories = {};
+// db.query(`SELECT id, title FROM categories;`).then(data => {
+//   for (let row of data.rows) {
+//     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
+//   }
+// });
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -67,9 +74,9 @@ app.listen(PORT, () => {
 });
 
 //GET login deleter depois
-app.get('/login', (request, response) => {
-  response.render('login'); //mudar para index depois
-});
+// app.get('/login', (request, response) => {
+//   response.render('login'); //mudar para index depois
+// });
 
 //POST login
 app.post('/login', (request, response) => {
@@ -100,22 +107,19 @@ app.post('/login', (request, response) => {
     });
 });
 
-//GET register DELETAR depois
-app.get('/register', (request, response) => {
-  response.render('register'); //mudar para index depois
-});
-
 //POST register
 app.post('/register', (request, response) => {
   const email = request.body.email;
   const password = request.body.password;
-  const hashedPassword = bcrypt.hashSync(password, 10);
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
 
   if (email === "" || password === "") {
     response.statusCode = 400;
     response.end("400 Bad request. Missing email or password");
     return;
   }
+
   db.query(`SELECT email
   FROM users
   WHERE email = $1;`, [request.body.email])
@@ -126,7 +130,7 @@ app.post('/register', (request, response) => {
         response.end("400 Bad request. Email already registered");
       } else {
         db.query(`INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
-          [request.body.email, hashedPassword])
+          [request.body.name, request.body.email, hashedPassword])
           .then(data => {
             const newUser = data.rows[0];
 
@@ -137,48 +141,58 @@ app.post('/register', (request, response) => {
       }
     });
 });
+
 //GET to-do-list
 app.get('/to-do-list', (request, response) => {
   response.render('to-do-list');
 });
 
+//POST Logout
+// app.post('/logout', (request, response) => {
+//   // eslint-disable-next-line camelcase
+//   request.session.user_id = null;
+//   response.redirect('/to-do-list');
+// });
+
 //POST to-do-list
 app.post('/create-item', (request, response) => {
-  const item = request.body.item;
+  const item = request.body.input;
   fetchItem(item).then(body => {
     if (body.error === "Item not found!") {
-      // Not a movie. Now search for Book or something else.
-
-
-      // Only for testing
-      response.statusCode = 400;
-      response.end("400 Bad request. This item not exist");
-
+      console.log("not found");
     } else {
-      response.send(body); //just for test
-      let dataType = JSON.parse(body).queryresult.datatypes;
-      if (dataType === 'Movie') {
-        console.log("movie here");
-        //send the results to the movie list;
-      } else if (dataType === 'Book') {
-        console.log("book here");
-        //send the results to the movie list;
-      } else {
-        const assumptions = JSON.parse(body).queryresult.assumptions.values[1].desc;
-        // console.log(assumptions.values[1].desc);
-        // for (let item of assumptions) {
-        if (assumptions.includes('restant' || 'food')) {
-          console.log('found restaurant');
-        } else {
-          console.log('not found the restaurant');
-        }
+    //   let dataType = JSON.parse(body).queryresult;
+    //   console.log(dataType);
+      // if (dataType === 'Movie') {
+      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+      //     [request.body.input, categories['film_and_tv_series'], request.session.user_id])
+      //     .then(data => {
+      //       const task = data.rows[0]; //delete after
+      //       response.json(task);
+      //     });
+      // } else if (dataType === 'Book') {
+      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *`,
+      //     [request.body.input, categories['books'], request.session.user_id])
+      //     .then(data => {
+      //       const task = data.rows[0]; //delete after
+      //       response.json(task);
+      //     });
+
+      // } else {
+      const assumptions = JSON.parse(body).queryresult.assumptions;
+      console.log(assumptions);
 
 
-        //send the results to the movie list;
-        // There is a movie with the given name
-        // Save item to the database and assign it to the item category
-        //to do insert into the database.
-      }
+
+
+
+      //   const foodWords = ['food', 'restaurant', 'dinning', 'fast food'];
+      //   if (foodWords.some(substring => assumptions.includes(substring))) {
+      //     console.log('found a restaurant');
+      //   } else {
+      //     console.log('not found the restaurant');
+      //   }
+      // }
     }
   });
 });
