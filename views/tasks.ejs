@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   
@@ -17,8 +21,6 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <!-- Oswald font -->
-    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700&display=swap" rel="stylesheet">
   </head>
 
   <header>
@@ -33,27 +35,39 @@
       <header>
         <div>Movies and TV Shows</div>
       </header>
-      <ul class="lists" id="movies1" data-category_id="1">
+      <ul class="lists" id="movies1" data-category_id="1" draggable="true" ondragstart="drag(event)">
+        <span class="close">x</span>
       </ul>
     </article>
     <article id="books" data-category_id="2">
       <header>
         <div>Books</div>
       </header>
-      <ul class="lists" id="books1" data-category_id="2"></ul>
+      <ul class="lists" id="books1" data-category_id="2" draggable="true" ondragstart="drag(event)">
+       <span class="close">x</span> 
+      </ul>
+    
     </article>
     <article id="restaurants" data-category_id="3">
       <header>
         <div>Restaurants</div>
       </header>
-      <ul class="lists" id="restaurants1" data-category_id="3"></ul>
+      <ul class="lists" id="restaurants1" data-category_id="3" draggable="true" ondragstart="drag(event)">
+        <span class="close">x</span>
+      </ul>
+    
     </article>
     <article id="products" data-category_id="4">
       <header>
         <div>Products</div>
       </header>
-      <ul class="lists" id="products1" data-category_id="4"></ul>
+      <ul class="lists" id="products1" data-category_id="4" draggable="true" ondragstart="drag(event)">
+        <span class="close">x</span>
+      </ul>
+      
     </article>
   </div>
   </div>
+
+
   </body>
