@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-        <!-- Material Design Bootstrap -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
 
     <title>Home Page</title>
 
@@ -33,13 +33,13 @@
   <body>
     <main class="main-container">
       <div class="text-block">
-        <h4>Nature</h4>
-        <p>What a beautiful sunrise</p>
+        <h4>Welcome!</h4>
+        <p>We sort the tasks for you, just:</p>
         <ul class="buttons">
-        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modalLoginForm"> Login</button>
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalLoginForm"> <i class="fas fa-sign-in-alt"></i>Login</button>
         <%- include('partials/login') %>
 
-        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modalRegisterForm">Register</button>
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalRegisterForm"><i class="far fa-address-card"></i>Register</button>
         <%- include('partials/register') %>
         </ul>
       </div>
