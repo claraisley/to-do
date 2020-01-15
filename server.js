@@ -66,9 +66,14 @@ app.get("/", (request, response) => {
   response.render("index");
 });
 
+
 app.get("/tasks", (req, res) => {
-  db.query(`SELECT * FROM tasks WHERE category_id = 1 AND user_id = ID FROM SESSION`, [request.body.email])
-  res.render("tasks");
+  db.query(`SELECT * FROM tasks WHERE user_id = $1`,
+  [req.session.user_id])
+  .then((data)=> {
+    let templateVars = {data:data.rows}
+    res.render("tasks", templateVars);
+  })
 });
 
 app.listen(PORT, () => {
@@ -236,16 +241,13 @@ app.post('/create-item', (request, response) => {
 
 // 1. create the user specific task list- join on tasks, categories and users
 //   populate user categories table by using
-//      Movies  select * from tasks where category_id = 1 AND user_id = ID FROM SESSION
-//      Books   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
-//      Rests   select * from tasks where category_id = 3 AND user_id = ID FROM SESSION
-//      Items   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
+//      Movies  select * from tasks where user_id = $1
+//
 
-//    recategorize an item, if it was mis categorized in the first place
+//   MIGHT NOT NEED THIS recategorize an item, if it was mis categorized in the first place
 //    select ITEM from tasks where user_id FROM SESSION and update the category_id to the  //      new category_id
 //
 //
-
 // 2. be able to update the user profile
 // 3. refactor code and make other files that are imported in the server, for example ///////helper functions, and imports
 //
