@@ -196,7 +196,6 @@ app.post('/create-item', (request, response) => {
         });
       //restaurants
     } else if (foodWords.some(substring => megaString.includes(substring))) {
-
       console.log('found a restaurant');
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['restaurants'], request.session.user_id])
