@@ -67,6 +67,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/tasks", (req, res) => {
+  db.query(`SELECT * FROM tasks WHERE category_id = 1 AND user_id = ID FROM SESSION`, [request.body.email])
   res.render("tasks");
 });
 
@@ -210,12 +211,12 @@ app.post('/create-item', (request, response) => {
     }
   });
 
-  //LOGOUT
-app.post('/logout', (request, response) => {
-  // eslint-disable-next-line camelcase
-  request.session.user_id = null;
-  response.redirect('/to-do-list');
-});
+  //Logout
+  app.post('/logout', (request, response) => {
+    // eslint-disable-next-line camelcase
+    request.session.user_id = null;
+    response.redirect('/to-do-list');
+  });
 })
 //POST DELETE
 //logica usada no outroo grupo, ter como referencia.
@@ -234,5 +235,19 @@ app.post('/logout', (request, response) => {
 // Wednesday todo list
 
 // 1. create the user specific task list- join on tasks, categories and users
+//   populate user categories table by using
+//      Movies  select * from tasks where category_id = 1 AND user_id = ID FROM SESSION
+//      Books   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
+//      Rests   select * from tasks where category_id = 3 AND user_id = ID FROM SESSION
+//      Items   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
+
+//    recategorize an item, if it was mis categorized in the first place
+//    select ITEM from tasks where user_id FROM SESSION and update the category_id to the  //      new category_id
+//
+//
+
 // 2. be able to update the user profile
-// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports
+// 3. refactor code and make other files that are imported in the server, for example ///////helper functions, and imports
+//
+
+//
