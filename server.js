@@ -50,7 +50,6 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
-<<<<<<< HEAD
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -59,9 +58,6 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
   }
 });
-=======
-
->>>>>>> logout
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -215,12 +211,12 @@ app.post('/create-item', (request, response) => {
   });
 
   //LOGOUT
-app.post('/logout', (request, response) => {
-  // eslint-disable-next-line camelcase
-  request.session.user_id = null;
-  response.redirect('/to-do-list');
-});
-
+  app.post('/logout', (request, response) => {
+    // eslint-disable-next-line camelcase
+    request.session.user_id = null;
+    response.redirect('/to-do-list');
+  });
+})
 //POST DELETE
 //logica usada no outroo grupo, ter como referencia.
 // app.post('/to-do-list/delete',(request, response) => {
@@ -238,5 +234,19 @@ app.post('/logout', (request, response) => {
 // Wednesday todo list
 
 // 1. create the user specific task list- join on tasks, categories and users
+//   populate user categories table by using
+//      Movies  select * from tasks where category_id = 1 AND user_id = ID FROM SESSION
+//      Books   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
+//      Rests   select * from tasks where category_id = 3 AND user_id = ID FROM SESSION
+//      Items   select * from tasks where category_id = 2 AND user_id = ID FROM SESSION
+
+//    recategorize an item, if it was mis categorized in the first place
+//    select ITEM from tasks where user_id FROM SESSION and update the category_id to the  //      new category_id
+//
+//
+
 // 2. be able to update the user profile
-// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports
+// 3. refactor code and make other files that are imported in the server, for example ///////helper functions, and imports
+//
+
+//
