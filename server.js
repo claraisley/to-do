@@ -50,6 +50,7 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
+
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -66,14 +67,14 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
-
+//GET tasks
 app.get("/tasks", (req, res) => {
   db.query(`SELECT * FROM tasks WHERE user_id = $1`,
-  [req.session.user_id])
-  .then((data)=> {
-    let templateVars = {data:data.rows}
-    res.render("tasks", templateVars);
-  })
+    [req.session.user_id])
+    .then((data) => {
+      let templateVars = { data: data.rows };
+      res.render("tasks", templateVars);
+    });
 });
 
 app.listen(PORT, () => {
@@ -114,7 +115,6 @@ app.post('/register', (request, response) => {
   const email = request.body.email;
   const password = request.body.password;
   const salt = bcrypt.genSaltSync(10);
-  console.log(password);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
   if (email === '' || password === '') {
@@ -122,7 +122,6 @@ app.post('/register', (request, response) => {
     response.end('400 Bad request. Missing email or password');
     return;
   }
-
   db.query(`SELECT email
   FROM users
   WHERE email = $1;`, [request.body.email])
@@ -217,25 +216,38 @@ app.post('/create-item', (request, response) => {
   });
 });
 
-//LOGOUT
+//POST Logout
 app.post('/logout', (request, response) => {
   // eslint-disable-next-line camelcase
   request.session.user_id = null;
   response.redirect('/');
 });
 
-//POST DELETE
-//logica usada no outroo grupo, ter como referencia.
-// app.post('/to-do-list/delete',(request, response) => {
-//   const user_id = request.session.user_id;
-//   const queryParams = [user_id, input];
-//   const queryString = db.query(`DELETE FROM tasks
-//   WHERE user_id = $1 AND input = $2
-//   `);
-//   const result = await db.query(queryString, queryParams);
-//   response.redirect('/to-do-list');
 
-// });
+//post update profile
+app.post('/update-profile', (request, response) => {
+  const email = request.body.email;
+  const password = request.body.password;
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
+  db.query(`SELECT email
+  FROM users
+  WHERE email = $1;`, [email])
+    .then(data => {
+      const user = data.rows[0];
+      if (user) {
+        response.statusCode = 400;
+        response.end('400 Bad request. Email already registered');
+      } else {
+        db.query(`UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4`,
+          [request.body.name, request.body.email, request.body.password,request.session.user_id])
+          .then(data => {
+            const newUser = data.rows[0];
+            response.redirect('/tasks');
+          });
+      }
+    });
+});
 
 
 // Wednesday todo list
@@ -250,4 +262,5 @@ app.post('/logout', (request, response) => {
 //
 //
 // 2. be able to update the user profile
-// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports.
+// 3. refactor code and make other files that are imported in the server, for example helper
+//functions, and imports.
