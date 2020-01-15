@@ -11,7 +11,7 @@ const app = express();
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
-const { walkObject } = require('walk-object')
+const { walkObject } = require('walk-object');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -50,7 +50,7 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
-<<<<<<< HEAD
+
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -59,19 +59,16 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
   }
 });
-=======
-
->>>>>>> logout
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (request, response) => {
-  response.render("index");
+app.get('/', (request, response) => {
+  response.render('index');
 });
 
-app.get("/tasks", (req, res) => {
-  res.render("tasks");
+app.get('tasks', (req, res) => {
+  res.render('tasks');
 });
 
 app.listen(PORT, () => {
@@ -88,14 +85,14 @@ app.post('/login', (request, response) => {
       const user = data.rows[0];
       if (!user) {
         response.statusCode = 403;
-        response.end("403 Forbidden. E-mail cannot be found");
+        response.end('403 Forbidden. E-mail cannot be found');
       } else if (!bcrypt.compareSync(request.body.password, user.password)) {
         response.statusCode = 403;
-        response.end("403 Forbidden. Wrong password");
+        response.end('403 Forbidden. Wrong password');
       } else {
         // eslint-disable-next-line camelcase
         request.session.user_id = user.id;
-        response.redirect('/to-do-list');
+        response.redirect('/tasks');
       }
       response.json({ user });
     })
@@ -112,11 +109,12 @@ app.post('/register', (request, response) => {
   const email = request.body.email;
   const password = request.body.password;
   const salt = bcrypt.genSaltSync(10);
+  console.log(password);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
-  if (email === "" || password === "") {
+  if (email === '' || password === '') {
     response.statusCode = 400;
-    response.end("400 Bad request. Missing email or password");
+    response.end('400 Bad request. Missing email or password');
     return;
   }
 
@@ -127,30 +125,29 @@ app.post('/register', (request, response) => {
       const user = data.rows[0];
       if (user) {
         response.statusCode = 400;
-        response.end("400 Bad request. Email already registered");
+        response.end('400 Bad request. Email already registered');
       } else {
         db.query(`INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
           [request.body.name, request.body.email, hashedPassword])
           .then(data => {
             const newUser = data.rows[0];
-
             // eslint-disable-next-line camelcase
             request.session.user_id = newUser.id;
-            response.redirect('/to-do-list');
+            response.redirect('/tasks');
           });
       }
     });
 });
 
 //GET to-do-list
-app.get('/to-do-list', (request, response) => {
-  response.render('to-do-list');
+app.get('/tasks', (request, response) => {
+  response.render('tasks');
 });
 
 
 const foodWords = ['restaurant', 'fast food', 'sandwich'];
-const bookWords = ['Book', "book", "written by", 'author']
-const movieWords = ['AcademyAward', 'Movie']
+const bookWords = ['Book', "book", "written by", 'author'];
+const movieWords = ['AcademyAward', 'Movie'];
 
 
 //POST to-do-list
@@ -158,21 +155,22 @@ app.post('/create-item', (request, response) => {
   const item = request.body.input;
   fetchItem(item).then(body => {
     let megaString = '';
-    console.log(`${item} is the search item `)
+    console.log(`${item} is the search item `); //delete after
     walkObject(JSON.parse(body).queryresult, ({ value }) => {
-      if (typeof value === 'string') megaString += " " + value
-    })
+      if (typeof value === 'string') megaString += " " + value;
+    });
 
     if (body.error === "Item not found!") {
       console.log("not found");
+
       //books
     } else if (bookWords.some(substring => {
 
-      if (megaString.includes(substring)) console.log(substring)
-      return megaString.includes(substring)
-    }
-
-    )) {
+      if (megaString.includes(substring)) {
+        console.log(substring); //delete after
+        return megaString.includes(substring);
+      }
+    })) {
       console.log(`found a book`);
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['books'], request.session.user_id])
@@ -182,8 +180,8 @@ app.post('/create-item', (request, response) => {
         });
       //movies
     } else if (movieWords.some(substring => {
-      if (megaString.includes(substring)) console.log(substring)
-      return megaString.includes(substring)
+      if (megaString.includes(substring)) console.log(substring);
+      return megaString.includes(substring);
     })) {
       console.log(`found a movie`);
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
@@ -204,21 +202,21 @@ app.post('/create-item', (request, response) => {
       // items
     } else {
       console.log(`found a product`);
-      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING
-    *;`,
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['products'], request.session.user_id])
         .then(data => {
-          const task = data.rows[0]; //delete after
+          const task = data.rows[0];
           response.json(task);
         });
     }
   });
+});
 
-  //LOGOUT
+//LOGOUT
 app.post('/logout', (request, response) => {
   // eslint-disable-next-line camelcase
   request.session.user_id = null;
-  response.redirect('/to-do-list');
+  response.redirect('/');
 });
 
 //POST DELETE
@@ -239,4 +237,4 @@ app.post('/logout', (request, response) => {
 
 // 1. create the user specific task list- join on tasks, categories and users
 // 2. be able to update the user profile
-// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports
+// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports.
