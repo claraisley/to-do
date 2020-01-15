@@ -50,7 +50,6 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
-<<<<<<< HEAD
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -59,9 +58,6 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
   }
 });
-=======
-
->>>>>>> logout
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -220,7 +216,7 @@ app.post('/logout', (request, response) => {
   request.session.user_id = null;
   response.redirect('/to-do-list');
 });
-
+})
 //POST DELETE
 //logica usada no outroo grupo, ter como referencia.
 // app.post('/to-do-list/delete',(request, response) => {
