@@ -3,15 +3,21 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="title">
   <a class="navbar-brand">SMART To-Do</a>
-  <i class="fas fa-check"></i>
-  </div>
 
+    <i class="fas fa-check"></i> 
+
+ 
+  </div>
+<div class="nav-buttons">
     <div class = "update">
-      <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#UpdateModal">Update</button>
+      <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#UpdateModal">Update Profile</button>
       <%- include('update-profile') %>
     </div>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+    <div class = "add-task">
+      <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#add-task-modal">Add Task</button>
+      <%- include('add-task') %>
+      </div>
+    </div>
   </div>
 </nav>

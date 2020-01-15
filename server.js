@@ -66,9 +66,9 @@ app.get("/", (request, response) => {
   response.render("index");
 });
 
-app.get("/tasks", (req, res) => {
+app.get("/tasks", (request, response) => {
   db.query(`SELECT * FROM tasks WHERE category_id = 1 AND user_id = ID FROM SESSION`, [request.body.email])
-  res.render("tasks");
+  response.render("tasks");
 });
 
 app.listen(PORT, () => {

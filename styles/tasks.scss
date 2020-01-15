@@ -3,22 +3,7 @@ body {
   height: 100vh;
   width: 100vw;
 }
-.search-form {
- display: flex;
 
-.form-control {
-  align-items: center;
-  width: 250px;
-  justify-content: center;
-  text-align: center;
-  margin: auto;
-  } 
-  #add-button {
-      width: 50%;
-    }
-}
-
-  
 
 
 .task-container {
@@ -67,5 +52,4 @@ article {
 
 .fas {
   margin-right: 10px;
-  font-size: large;
 }
