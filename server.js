@@ -211,7 +211,7 @@ app.post('/create-item', (request, response) => {
     }
   });
 
-  //LOGOUT
+  //Logout
   app.post('/logout', (request, response) => {
     // eslint-disable-next-line camelcase
     request.session.user_id = null;
