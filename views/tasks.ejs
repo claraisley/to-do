@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Material Design Bootstrap -->
@@ -23,6 +23,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <% JSON.stringify(data)%>
 
   </head>
 
@@ -39,15 +40,19 @@
     </div>
 
 
-
   <div class="task-container">
   <div id="myLists">
 
     <article id="movies" data-category_id="1">
       <header>
-        <div><i class="fas fa-film"></i>Movies and TV Shows</div>
+        <div><i class="fas fa-film"></i>Movies and TV Shows </div>
       </header>
       <ul class="lists" id="movies1" data-category_id="1" draggable="true" ondragstart="drag(event)">
+        <% for (const item of data) { %>
+          <% if (item.category_id === 1) { %>
+          <li> <%= item.input %> </li>
+          <% } %>
+        <%}%>
       </ul>
     </article>
     <article id="books" data-category_id="2">
@@ -55,24 +60,38 @@
         <div><i class="fas fa-book-reader"></i>Books</div>
       </header>
       <ul class="lists" id="books1" data-category_id="2" draggable="true" ondragstart="drag(event)">
+        <% for (const item of data) { %>
+          <% if (item.category_id === 2) { %>
+          <li> <%= item.input %> </li>
+          <% } %>
+        <%}%>
       </ul>
-    
+
     </article>
     <article id="restaurants" data-category_id="3">
       <header>
         <div><i class="fas fa-utensils"></i>Restaurants</div>
       </header>
       <ul class="lists" id="restaurants1" data-category_id="3" draggable="true" ondragstart="drag(event)">
+        <% for (const item of data) { %>
+          <% if (item.category_id === 3) { %>
+          <li> <%= item.input %> </li>
+          <% } %>
+        <%}%>
       </ul>
-    
+
     </article>
     <article id="products" data-category_id="4">
       <header>
         <div><i class="fas fa-shopping-basket"></i>Products</div>
       </header>
       <ul class="lists" id="products1" data-category_id="4" draggable="true" ondragstart="drag(event)">
+        <% for (const item of data) { %>
+          <% if (item.category_id === 4) { %>
+          <li> <%= item.input %> </li>
+          <% } %>
+        <%}%>
       </ul>
-      
     </article>
   </div>
   </div>
