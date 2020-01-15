@@ -67,14 +67,16 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
+
 //GET tasks
-app.get("/tasks", (req, res) => {
+app.get("/tasks", (request, response) => {
   db.query(`SELECT * FROM tasks WHERE user_id = $1`,
-    [req.session.user_id])
+    [request.session.user_id])
     .then((data) => {
       let templateVars = { data: data.rows };
       res.render("tasks", templateVars);
     });
+
 });
 
 app.listen(PORT, () => {
