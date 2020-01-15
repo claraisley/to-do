@@ -50,6 +50,7 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
+<<<<<<< HEAD
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -58,6 +59,9 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
   }
 });
+=======
+
+>>>>>>> logout
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -73,11 +77,6 @@ app.get("/tasks", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-//GET login deleter depois
-// app.get('/login', (request, response) => {
-//   response.render('login'); //mudar para index depois
-// });
 
 //POST login
 app.post('/login', (request, response) => {
@@ -148,12 +147,7 @@ app.get('/to-do-list', (request, response) => {
   response.render('to-do-list');
 });
 
-//POST Logout
-// app.post('/logout', (request, response) => {
-//   // eslint-disable-next-line camelcase
-//   request.session.user_id = null;
-//   response.redirect('/to-do-list');
-// });
+
 const foodWords = ['restaurant', 'fast food', 'sandwich'];
 const bookWords = ['Book', "book", "written by", 'author']
 const movieWords = ['AcademyAward', 'Movie']
@@ -219,7 +213,26 @@ app.post('/create-item', (request, response) => {
         });
     }
   });
+
+  //LOGOUT
+app.post('/logout', (request, response) => {
+  // eslint-disable-next-line camelcase
+  request.session.user_id = null;
+  response.redirect('/to-do-list');
 });
+
+//POST DELETE
+//logica usada no outroo grupo, ter como referencia.
+// app.post('/to-do-list/delete',(request, response) => {
+//   const user_id = request.session.user_id;
+//   const queryParams = [user_id, input];
+//   const queryString = db.query(`DELETE FROM tasks
+//   WHERE user_id = $1 AND input = $2
+//   `);
+//   const result = await db.query(queryString, queryParams);
+//   response.redirect('/to-do-list');
+
+// });
 
 
 // Wednesday todo list
