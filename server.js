@@ -50,7 +50,6 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
-
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
 const categories = {};
@@ -67,8 +66,14 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
-app.get('tasks', (req, res) => {
-  res.render('tasks');
+
+app.get("/tasks", (req, res) => {
+  db.query(`SELECT * FROM tasks WHERE user_id = $1`,
+  [req.session.user_id])
+  .then((data)=> {
+    let templateVars = {data:data.rows}
+    res.render("tasks", templateVars);
+  })
 });
 
 app.listen(PORT, () => {
@@ -236,5 +241,13 @@ app.post('/logout', (request, response) => {
 // Wednesday todo list
 
 // 1. create the user specific task list- join on tasks, categories and users
+//   populate user categories table by using
+//      Movies  select * from tasks where user_id = $1
+//
+
+//   MIGHT NOT NEED THIS recategorize an item, if it was mis categorized in the first place
+//    select ITEM from tasks where user_id FROM SESSION and update the category_id to the  //      new category_id
+//
+//
 // 2. be able to update the user profile
 // 3. refactor code and make other files that are imported in the server, for example helper functions, and imports.
