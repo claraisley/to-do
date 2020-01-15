@@ -52,12 +52,12 @@ app.use("/api/users", usersRoutes(db));
 
 // Read categories IDs from database
 // This creates an object like { film_and_tv_series: 1, book: 2, ...}
-// const categories = {};
-// db.query(`SELECT id, title FROM categories;`).then(data => {
-//   for (let row of data.rows) {
-//     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
-//   }
-// });
+const categories = {};
+db.query(`SELECT id, title FROM categories;`).then(data => {
+  for (let row of data.rows) {
+    categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
+  }
+});
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -165,62 +165,62 @@ app.post('/create-item', (request, response) => {
       if (typeof value === 'string') megaString += " " + value
     })
 
-
-    // console.log(dataType);
-    // if assumptions is true,then check it in descriptions map
-    // or if assumptions, or datatypes is false put it in products
-      // console.log(assumptions)
     if (body.error === "Item not found!") {
       console.log("not found");
-
+      //books
     } else if (bookWords.some(substring => {
 
-      if( megaString.includes(substring) ) console.log(substring)
+      if (megaString.includes(substring)) console.log(substring)
       return megaString.includes(substring)
     }
 
-      )) {
+    )) {
       console.log(`found a book`);
-
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+        [request.body.input, categories['books'], request.session.user_id])
+        .then(data => {
+          const task = data.rows[0]; //delete after
+          response.json(task);
+        });
+      //movies
     } else if (movieWords.some(substring => {
-
-      if( megaString.includes(substring) ) console.log(substring)
+      if (megaString.includes(substring)) console.log(substring)
       return megaString.includes(substring)
-    }
-
-      )) {
+    })) {
       console.log(`found a movie`);
-      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
-      //     [request.body.input, categories['film_and_tv_series'], request.session.user_id])
-      //     .then(data => {
-      //       const task = data.rows[0]; //delete after
-      //       response.json(task);
-      //     });
-      // }
-
-      // } else if (dataType === 'Book') {
-      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *`,
-      //     [request.body.input, categories['books'], request.session.user_id])
-      //     .then(data => {
-      //       const task = data.rows[0]; //delete after
-      //       response.json(task);
-      //     });
-
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+        [request.body.input, categories['film_and_tv_series'], request.session.user_id])
+        .then(data => {
+          const task = data.rows[0]; //delete after
+          response.json(task);
+        });
+      //restaurants
     } else if (foodWords.some(substring => megaString.includes(substring))) {
 
-     console.log('found a restaurant');
-
-     } else console.log(`found a product`);
-
-    // }
-     //   const foodWords = ['food', 'restaurant', 'dinning', 'fast food'];
-      //   if (foodWords.some(substring => assumptions.includes(substring))) {
-      //     console.log('found a restaurant');
-      //   } else {
-      //     console.log('not found the restaurant');
-      //   }
-      // }
-
-  })
+      console.log('found a restaurant');
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+        [request.body.input, categories['restaurants'], request.session.user_id])
+        .then(data => {
+          const task = data.rows[0]; //delete after
+          response.json(task);
+        });
+      // items
+    } else {
+      console.log(`found a product`);
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING
+    *;`,
+        [request.body.input, categories['products'], request.session.user_id])
+        .then(data => {
+          const task = data.rows[0]; //delete after
+          response.json(task);
+        });
+    }
+  });
 });
 
+
+// Wednesday todo list
+
+// 1. create the user specific task list- join on tasks, categories and users
+// 2. be able to update the user profile
+// 3. refactor code and make other files that are imported in the server, for example helper functions, and imports
