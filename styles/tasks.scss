@@ -19,7 +19,7 @@ body {
   height: 100%;
   margin: 50px;
   align-items: baseline;
-
+  flex-wrap: wrap;
 } 
 
 article {
@@ -30,6 +30,9 @@ article {
     border-color: black;
     text-align: center;
     background-color:#bdb5ae;
+    min-width: 205px;
+    margin-bottom: 25px;
+
 
    header {
   padding-top: 10px;
