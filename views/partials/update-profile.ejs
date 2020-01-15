@@ -1,11 +1,11 @@
-<form class="registerModal" action="/register" method="POST">
-  <div class="modal" id="RegisterModal">
+<form class="updateModal" action="/update" method="POST">
+  <div class="modal" id="UpdateModal">
     <div class="modal-dialog">
       <div class="modal-content">
   
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Register</h4>
+          <h4 class="modal-title">Update Profile</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
   
@@ -26,12 +26,16 @@
             <i class="fa fa-key icon"></i>
             <input class="input-field" type="password" placeholder="Password" name="psw">
           </div>
+
+          <div class="input-container">
+            <i class="fa fa-key icon"></i>
+            <input class="input-field" type="password" placeholder="New Password" name="psw1">
+          </div>
         
-          <button type="submit" class="btn">Register</button>
+          <button type="submit" class="btn">Update</button>
         </div>
   
       </div>
     </div>
   </div>
-
 </form>

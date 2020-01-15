@@ -29,6 +29,7 @@ body {
   height: 100%;
   margin: 50px;
   align-items: baseline;
+  flex-wrap: wrap;
 } 
 
 article {
@@ -39,7 +40,10 @@ article {
     border-radius: 15px;
     border-color: black;
     text-align: center;
-    background-color: #babebf;
+    background-color:#bdb5ae;
+    min-width: 205px;
+    margin-bottom: 25px;
+
 
    header {
   padding-top: 10px;
@@ -49,4 +53,5 @@ article {
   border-top-right-radius: 15px;
 } 
 }
+
 

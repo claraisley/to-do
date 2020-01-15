@@ -4,7 +4,16 @@
 // }
 
 .navbar {
-  background-color: #000000;
   font-family: 'Oswald', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
+  color: #FCBF49;
+  font-size: xx-large;
+}
+
+.navbar-brand {
+  font-size: xx-large;
+}
+
+.update {
+  float: right;
 }
