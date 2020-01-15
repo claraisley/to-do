@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
-    <!-- Bootstrap CSS
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>Home Page</title>
 
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/index.css" type="text/css" />
     <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/modals.css" type="text/css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -36,10 +37,10 @@
         <h4>Welcome!</h4>
         <p>We sort the tasks for you, just:</p>
         <ul class="buttons">
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalLoginForm"> <i class="fas fa-sign-in-alt"></i>Login</button>
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#LoginModal"> <i class="fas fa-sign-in-alt"></i>Login</button>
         <%- include('partials/login') %>
 
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalRegisterForm"><i class="far fa-address-card"></i>Register</button>
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#RegisterModal"><i class="far fa-address-card"></i>Register</button>
         <%- include('partials/register') %>
         </ul>
       </div>
