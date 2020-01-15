@@ -67,6 +67,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/tasks", (req, res) => {
+  db.query(`SELECT * FROM tasks WHERE category_id = 1 AND user_id = ID FROM SESSION`, [request.body.email])
   res.render("tasks");
 });
 
