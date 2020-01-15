@@ -13,5 +13,27 @@
         <button type="submit" class="btn btn-primary">add</button>
       </form>
     </div>
+      <form method="POST" class="form-inline" action="/logout">
+        <button type="submit" class="nav-item btn btn-sm btn btn-outline-light" style="margin-left: 10; margin-top: 5;">Logout</button>
+      </form>
+
+      <div class="container">
+      <main style="margin: 1em;">
+        <h4>My URLs</h4>
+        <table class="table">
+
+          <tbody>
+
+                  <form method="POST" action="/to-do-list/delete">
+                    <button type="submit">Delete </button>
+                  </form>
+                </td>
+                <td>
+                  <form method="GET" action="/to-do-list/edit">
+                    <button type="submit">Edit </button>
+                  </td>
+                </tr>
+
+          </tbody>
 </body>
 </html>

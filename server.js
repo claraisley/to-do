@@ -49,14 +49,7 @@ const usersRoutes = require("./routes/users");
 app.use("/api/users", usersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
-// Read categories IDs from database
-// This creates an object like { film_and_tv_series: 1, book: 2, ...}
-// const categories = {};
-// db.query(`SELECT id, title FROM categories;`).then(data => {
-//   for (let row of data.rows) {
-//     categories[row.title] = row.id; //dentroo do banco de dados todas as linhas com o titulo isso vai ser igual ao id
-//   }
-// });
+
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -68,11 +61,6 @@ app.get("/", (request, response) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-//GET login deleter depois
-// app.get('/login', (request, response) => {
-//   response.render('login'); //mudar para index depois
-// });
 
 //POST login
 app.post('/login', (request, response) => {
@@ -144,52 +132,21 @@ app.get('/to-do-list', (request, response) => {
 });
 
 //POST Logout
-// app.post('/logout', (request, response) => {
-//   // eslint-disable-next-line camelcase
-//   request.session.user_id = null;
-//   response.redirect('/to-do-list');
-// });
+app.post('/logout', (request, response) => {
+  // eslint-disable-next-line camelcase
+  request.session.user_id = null;
+  response.redirect('/to-do-list');
+});
 
-//POST to-do-list
-app.post('/create-item', (request, response) => {
-  const item = request.body.input;
-  fetchItem(item).then(body => {
-    if (body.error === "Item not found!") {
-      console.log("not found");
-    } else {
-    //   let dataType = JSON.parse(body).queryresult;
-    //   console.log(dataType);
-      // if (dataType === 'Movie') {
-      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
-      //     [request.body.input, categories['film_and_tv_series'], request.session.user_id])
-      //     .then(data => {
-      //       const task = data.rows[0]; //delete after
-      //       response.json(task);
-      //     });
-      // } else if (dataType === 'Book') {
-      //   db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *`,
-      //     [request.body.input, categories['books'], request.session.user_id])
-      //     .then(data => {
-      //       const task = data.rows[0]; //delete after
-      //       response.json(task);
-      //     });
-
-      // } else {
-      const assumptions = JSON.parse(body).queryresult.assumptions;
-      console.log(assumptions);
-
-
-
-
-
-      //   const foodWords = ['food', 'restaurant', 'dinning', 'fast food'];
-      //   if (foodWords.some(substring => assumptions.includes(substring))) {
-      //     console.log('found a restaurant');
-      //   } else {
-      //     console.log('not found the restaurant');
-      //   }
-      // }
-    }
-  });
+//POST DELETE
+//logica usada no outroo grupo, ter como referencia.
+app.post('/to-do-list/delete',(request, response) => {
+  const user_id = request.session.user_id;
+  const queryParams = [user_id, input];
+  const queryString = db.query(`DELETE FROM tasks
+  WHERE user_id = $1 AND input = $2
+  `);
+  const result = await db.query(queryString, queryParams);
+  response.redirect('/to-do-list');
 });
 
