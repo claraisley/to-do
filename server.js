@@ -145,7 +145,7 @@ app.post('/register', (request, response) => {
     });
 });
 
-//GET to-do-list
+//GET tasks
 app.get('/tasks', (request, response) => {
   response.render('tasks');
 });
@@ -156,7 +156,7 @@ const bookWords = ['Book', "book", "written by", 'author'];
 const movieWords = ['AcademyAward', 'Movie'];
 
 
-//POST to-do-list
+//POST tasks
 app.post('/create-item', (request, response) => {
   const item = request.body.input;
   fetchItem(item).then(body => {
@@ -242,7 +242,7 @@ app.post('/update-profile', (request, response) => {
         response.end('400 Bad request. Email already registered');
       } else {
         db.query(`UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4`,
-          [request.body.name, request.body.email, request.body.password,request.session.user_id])
+          [request.body.name, request.body.email, request.body.password, request.session.user_id])
           .then(data => {
             const newUser = data.rows[0];
             response.redirect('/tasks');
