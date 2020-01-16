@@ -76,7 +76,6 @@ app.get("/tasks", (request, response) => {
       let templateVars = { data: data.rows };
       response.render("tasks", templateVars);
     });
-
 });
 
 app.listen(PORT, () => {
@@ -218,6 +217,7 @@ app.post('/create-item', (request, response) => {
   });
 });
 
+
 //POST Logout
 app.post('/logout', (request, response) => {
   // eslint-disable-next-line camelcase
@@ -264,5 +264,46 @@ app.post('/update-profile', (request, response) => {
 //
 //
 // 2. be able to update the user profile
-// 3. refactor code and make other files that are imported in the server, for example helper
-//functions, and imports.
+
+// 3. refactor code and make other files that are imported in the server, for example ///////helper functions, and imports
+//
+
+//
+const { JSDOM } = require( "jsdom" );
+const { window } = new JSDOM( "" );
+const $ = require( "jquery" )( window );
+
+$(() => {
+  // function that drags and drops
+  let task;
+  $('.list-item').on('mousedown', (event) => {
+    task = $(event.target).text();
+  });
+
+  //updates database when task is dragged and dropped
+  $('.list-item').on('drop', (event) => {
+    const category = $(event.target)
+      .parent()
+      .attr('data-category_id="1"');
+    try {}
+    // try {
+    //   $.post('/tasks', function (data) {
+    //     $(( ".result" ).html( data ))
+    //   })
+    //  // or with Ajax ?
+    //   $.ajax({
+    //     type: "POST",
+    //     url: '/tasks',
+    //     data: data,
+    //     success: success,
+    //     dataType: dataType
+    //   });
+
+
+    catch (err) {
+      console.error(err);
+    }
+  })
+
+})
+
