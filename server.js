@@ -85,7 +85,7 @@ app.listen(PORT, () => {
 //POST login
 app.post('/login', (request, response) => {
   // check if user exists in database
-  db.query(`SELECT email, password
+  db.query(`SELECT id, email, password
   FROM users
   WHERE email = $1;`, [request.body.email])
     .then(data => {
@@ -156,7 +156,7 @@ const movieWords = ['AcademyAward', 'Movie'];
 
 
 //POST tasks
-app.post('/create-item', (request, response) => {
+app.post('/tasks', (request, response) => {
   const item = request.body.input;
   fetchItem(item).then(body => {
     let megaString = '';
@@ -228,23 +228,22 @@ app.post('/logout', (request, response) => {
 
 //post update profile
 app.post('/update-profile', (request, response) => {
-  const email = request.body.email;
   const password = request.body.password;
+  const newPassword = request.body["new-password"];
   const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-  db.query(`SELECT email
+  const hashedPassword = bcrypt.hashSync(newPassword, salt);
+  db.query(`SELECT email, password
   FROM users
-  WHERE email = $1;`, [email])
+  WHERE id = $1;`, [request.session.user_id])
     .then(data => {
       const user = data.rows[0];
-      if (user) {
-        response.statusCode = 400;
-        response.end('400 Bad request. Email already registered');
+      if (!bcrypt.compareSync(password, user.password)) {
+        response.statusCode = 403;
+        response.end('403 Forbidden. Wrong password');
       } else {
-        db.query(`UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4`,
-          [request.body.name, request.body.email, request.body.password, request.session.user_id])
-          .then(data => {
-            const newUser = data.rows[0];
+        db.query(`UPDATE users SET name = $1, password = $2 WHERE id = $3`,
+          [request.body.name, hashedPassword, request.session.user_id])
+          .then(() => {
             response.redirect('/tasks');
           });
       }
