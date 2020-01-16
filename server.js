@@ -155,9 +155,10 @@ app.post('/register', (request, response) => {
     });
 });
 
-const foodWords = ['restaurant', 'fast food', 'sandwich'];
-const bookWords = ['Book', "book", "written by", 'author'];
-const movieWords = ['AcademyAward', 'Movie'];
+const foodWords = ['restaurant', 'fast food', 'sandwich', 'yelp', 'menu'];
+const movieWords = ['Academy Award', 'Movie', 'netflix', 'tv', 'imdb', 'film', 'directed by', 'starring'];
+const bookWords = ['Book', "book", "written by", 'author', 'published', 'fiction', 'novel'];
+
 
 
 //POST tasks
@@ -172,7 +173,18 @@ app.post('/tasks', (request, response) => {
 
     if (body.error === "Item not found!") {
       console.log("not found");
-
+      //movies
+    } else if (movieWords.some(substring => {
+      if (megaString.includes(substring)) console.log(substring);
+      return megaString.includes(substring);
+    })) {
+      console.log(`found a movie`);
+      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+        [request.body.input, categories['film_and_tv_series'], request.session.user_id])
+        .then(data => {
+          const task = data.rows[0]; //delete after
+          response.redirect('/tasks');
+        });
       //books
     } else if (bookWords.some(substring => {
 
@@ -188,18 +200,8 @@ app.post('/tasks', (request, response) => {
           const task = data.rows[0]; //delete after
           response.redirect('/tasks');
         });
-      //movies
-    } else if (movieWords.some(substring => {
-      if (megaString.includes(substring)) console.log(substring);
-      return megaString.includes(substring);
-    })) {
-      console.log(`found a movie`);
-      db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
-        [request.body.input, categories['film_and_tv_series'], request.session.user_id])
-        .then(data => {
-          const task = data.rows[0]; //delete after
-          response.redirect('/tasks');
-        });
+      
+
       //restaurants
     } else if (foodWords.some(substring => megaString.includes(substring))) {
       console.log('found a restaurant');
@@ -281,7 +283,7 @@ app.post('/update-profile', (request, response) => {
 
 
 // get new task category and pass to tasks table in database
-app.post('/tasks/move', (request, resolve) => {
+app.post('/tasks/move', (request, response) => {
   const { input, category_id } = request.body;
 
   `INSERT INTO tasks(input, category_id, user_id)
