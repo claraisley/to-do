@@ -9,6 +9,7 @@
   display: flex;
   width: 100%;
   margin-bottom: 15px;
+  height: 55px;
 }
 
 /* Style the form icons */
@@ -28,7 +29,7 @@
 }
 
 .input-field:focus {
-  border: 2px solid dodgerblue;
+  border: 2px solid #333a40;
 }
 
 /* Set a style for the submit button */
@@ -41,6 +42,7 @@
   width: 100%;
   opacity: 0.9;
   align-items: center;
+  margin: 0;
 }
 
 .btn:hover {

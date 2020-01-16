@@ -7,14 +7,24 @@
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   color: #FCBF49;
-  font-size: xx-large;
+  font-size: xx-large !important; 
 }
 
 .navbar-brand {
-  font-size: xx-large;
+  font-size: xx-large !important;
 }
 
 .update {
+  float: right;
+  margin: 10px;
+}
+
+.add-task {
+  float: right;
+  margin: 10px;
+}
+
+.logout {
   float: right;
   margin: 10px;
 }
