@@ -67,12 +67,12 @@ app.get("/", (request, response) => {
 });
 
 
-app.get("/tasks", (req, res) => {
+app.get("/tasks", (request, response) => {
   db.query(`SELECT * FROM tasks WHERE user_id = $1`,
-  [req.session.user_id])
+  [request.session.user_id])
   .then((data)=> {
     let templateVars = {data:data.rows}
-    res.render("tasks", templateVars);
+    response.render("tasks", templateVars);
   })
 });
 
@@ -223,6 +223,9 @@ app.post('/create-item', (request, response) => {
     response.redirect('/to-do-list');
   });
 })
+
+
+
 //POST DELETE
 //logica usada no outroo grupo, ter como referencia.
 // app.post('/to-do-list/delete',(request, response) => {
@@ -253,3 +256,40 @@ app.post('/create-item', (request, response) => {
 //
 
 //
+const { JSDOM } = require( "jsdom" );
+const { window } = new JSDOM( "" );
+const $ = require( "jquery" )( window );
+
+$(() => {
+  // function that drags and drops
+  let task;
+  $('.list-item').on('mousedown', (event) => {
+    task = $(event.target).text();
+  });
+
+  //updates database when task is dragged and dropped
+  $('.list-item').on('drop', (event) => {
+    const category = $(event.target)
+      .parent()
+      .attr('data-category_id="1"');
+    try {}
+    // try {
+    //   $.post('/tasks', function (data) {
+    //     $(( ".result" ).html( data ))
+    //   })
+    //  // or with Ajax ?
+    //   $.ajax({
+    //     type: "POST",
+    //     url: '/tasks',
+    //     data: data,
+    //     success: success,
+    //     dataType: dataType
+    //   });
+
+
+    catch (err) {
+      console.error(err);
+    }
+  })
+
+})

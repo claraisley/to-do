@@ -48,10 +48,10 @@
       <header>
         <div><i class="fas fa-film"></i>Movies and TV Shows </div>
       </header>
-      <ul class="lists" id="movies1" data-category_id="1" draggable="true" ondragstart="drag(event)">
+      <ul class="lists" id="movies1" data-category_id="1" ondrop="drop(event)" ondragover="allowDrop(event)">
         <% for (const item of data) { %>
           <% if (item.category_id === 1) { %>
-          <li> <%= item.input %> </li>
+          <li class='list-item' id="item-<%= item.id %>" draggable="true" ondragstart="drag(event)"> <%= item.input %> </li>
           <% } %>
         <%}%>
       </ul>
@@ -60,10 +60,10 @@
       <header>
         <div><i class="fas fa-book-reader"></i>Books</div>
       </header>
-      <ul class="lists" id="books1" data-category_id="2" draggable="true" ondragstart="drag(event)">
+      <ul class="lists" id="books1" data-category_id="2" ondrop="drop(event)" ondragover="allowDrop(event)">
         <% for (const item of data) { %>
           <% if (item.category_id === 2) { %>
-          <li> <%= item.input %> </li>
+            <li class='list-item' id="item-<%= item.id %>" draggable="true" ondragstart="drag(event)"> <%= item.input %> </li>
           <% } %>
         <%}%>
       </ul>
@@ -73,10 +73,10 @@
       <header>
         <div><i class="fas fa-utensils"></i>Restaurants</div>
       </header>
-      <ul class="lists" id="restaurants1" data-category_id="3" draggable="true" ondragstart="drag(event)">
+      <ul class="lists" id="restaurants1" data-category_id="3" ondrop="drop(event)" ondragover="allowDrop(event)">
         <% for (const item of data) { %>
           <% if (item.category_id === 3) { %>
-          <li> <%= item.input %> </li>
+            <li class='list-item' id="item-<%= item.id %>" draggable="true" ondragstart="drag(event)"> <%= item.input %> </li>
           <% } %>
         <%}%>
       </ul>
@@ -86,10 +86,10 @@
       <header>
         <div><i class="fas fa-shopping-basket"></i>Products</div>
       </header>
-      <ul class="lists" id="products1" data-category_id="4" draggable="true" ondragstart="drag(event)">
+      <ul class="lists" id="products1" data-category_id="4" ondrop="drop(event)" ondragover="allowDrop(event)">
         <% for (const item of data) { %>
           <% if (item.category_id === 4) { %>
-          <li> <%= item.input %> </li>
+            <li class='list-item' id="item-<%= item.id %>" draggable="true" ondragstart="drag(event)"> <%= item.input %> </li>
           <% } %>
         <%}%>
       </ul>
