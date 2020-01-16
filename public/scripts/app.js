@@ -26,3 +26,34 @@ function drop(ev) {
   ev.target.appendChild(document.getElementById(data));
   ev.preventDefault();
 }
+
+$(() => {
+  // function that drags and drops
+  let task;
+  $('.list-item').on('mousedown', (event) => {
+    task = $(event.target).text();
+  });
+
+  //function that will database when task is dragged into a new category
+
+  $('.list-group').on('drop', function (event) {
+    const category = $(event.target)
+      .parent()
+      .attr('data-category_id');
+
+
+    try {
+      console.log("this is task and category", task ,category)
+      $.ajax('/tasks', {
+        method: 'POST',
+        data: {
+          input: task,
+          category_id: category
+        }
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  })
+
+});

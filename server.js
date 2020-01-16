@@ -274,43 +274,30 @@ app.post('/update-profile', (request, response) => {
 //
 
 //
-const { JSDOM } = require("jsdom");
-const { window } = new JSDOM("");
-const $ = require("jquery")(window);
-
-$(() => {
-  // function that drags and drops
-  let task;
-  $('.list-item').on('mousedown', (event) => {
-    task = $(event.target).text();
-  });
-
-  //updates database when task is dragged and dropped
-  $('.list-item').on('drop', (event) => {
-    const category = $(event.target)
-      .parent()
-      .attr('data-category_id="1"');
-    // try {
-    //   console.log('xunda')
-    // }
-    // try {
-    //   $.post('/tasks', function (data) {
-    //     $(( ".result" ).html( data ))
-    //   })
-    //  // or with Ajax ?
-    //   $.ajax({
-    //     type: "POST",
-    //     url: '/tasks',
-    //     data: data,
-    //     success: success,
-    //     dataType: dataType
-    //   });
+// const { JSDOM } = require("jsdom");
+// const { window } = new JSDOM("");
+// const $ = require("jquery")(window);
 
 
-    // catch (err) {
-    //   console.error(err);
-    // }
-  });
 
-});
+// get new task category and pass to tasks table in database
+app.post('/tasks/move', (request, resolve) => {
+  console.log(request.body)
+//   const request.body = { input, category_id };
+
+//   `UPDATE tasks
+//   SET category_id = $1
+//   WHERE user_id = $2 AND input = $3
+//   RETURNING *;
+//   `;
+// try {
+
+// } catch (err) {
+
+// }
+})
+
+
+
+
 
