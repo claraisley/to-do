@@ -29,6 +29,13 @@ body {
   color: #333a40;
 } 
 
+@media screen and (max-width:640px) {
+  article {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 article {
   width: 22%;
   height: 500px;
