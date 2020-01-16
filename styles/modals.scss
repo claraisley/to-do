@@ -9,6 +9,7 @@
   display: flex;
   width: 100%;
   margin-bottom: 15px;
+  height: 47px;
 }
 
 /* Style the form icons */
@@ -18,6 +19,7 @@
   color: #333a40;
   min-width: 50px;
   text-align: center;
+  font-size: x-large;
 }
 
 /* Style the input fields */
@@ -25,16 +27,18 @@
   width: 100%;
   padding: 10px;
   outline: none;
+  font-size: large;
+  font-weight: 600;
 }
 
 .input-field:focus {
-  border: 2px solid dodgerblue;
+  border: 2px solid #333a40;
 }
 
 /* Set a style for the submit button */
 .btn {
   background-color: #FCBF49;
-  color: white;
+  color:#333a40;
   padding: 15px 20px;
   border: none;
   cursor: pointer;

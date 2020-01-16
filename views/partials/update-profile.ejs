@@ -1,40 +1,44 @@
-<form class="updateModal" action="/update" method="POST">
+
+<form class="updateModal" action="/tasks" method="POST">
+
   <div class="modal" id="UpdateModal">
     <div class="modal-dialog">
       <div class="modal-content">
-  
+
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Update Profile</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-  
+
         <!-- Modal body -->
         <div class="modal-body">
 
           <div class="input-container">
             <i class="fa fa-user icon"></i>
-            <input class="input-field" type="text" placeholder="Username" name="usrnm">
+
+            <input class="input-field" type="text" placeholder="Username" name="Username">
+
           </div>
-        
+
           <div class="input-container">
             <i class="fa fa-envelope icon"></i>
             <input class="input-field" type="text" placeholder="Email" name="email">
           </div>
-        
+
           <div class="input-container">
-            <i class="fa fa-key icon"></i>
-            <input class="input-field" type="password" placeholder="Password" name="psw">
+            <i class="fas fa-unlock icon m-0"></i>
+            <input class="input-field" type="password" placeholder="Password" name="password">
           </div>
 
           <div class="input-container">
-            <i class="fa fa-key icon"></i>
-            <input class="input-field" type="password" placeholder="New Password" name="psw1">
+            <i class="fas fa-unlock icon m-0"></i>
+            <input class="input-field" type="password" placeholder="New Password" name="new-password">
           </div>
-        
-          <button type="submit" class="btn">Update</button>
+
+          <button type="submit" class="btn m-0">Update</button>
         </div>
-  
+
       </div>
     </div>
   </div>
