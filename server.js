@@ -63,9 +63,12 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+
+//home
 app.get('/', (request, response) => {
   let templateVars = { user: null };
   response.render('index', templateVars);
+
 });
 
 
