@@ -5,6 +5,17 @@ function drag(ev) {
   ev.dataTransfer.setData("Text", ev.target.id);
   task = $(event.target).text();
 }
+$(() => {
+  $.ajax({
+    method: "GET",
+    url: "/api/users"
+  }).done((users) => {
+    for(user of users) {
+      $("<div>").text(user.name).appendTo($("body"));
+    }
+  });;
+});
+
 
 function allowDrop(ev) {
   ev.preventDefault();

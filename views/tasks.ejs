@@ -12,11 +12,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-      <!-- Oswald font -->
-      <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700&display=swap" rel="stylesheet">
+    <!-- Oswald font -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700&display=swap" rel="stylesheet">
 
-    <title>Add a task</title>
-
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
@@ -29,6 +28,7 @@
   crossorigin="anonymous"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
+    <title>Add a task</title>
   </head>
 
   <header>
@@ -43,10 +43,7 @@
 
     <article id="movies" data-category_id="1">
       <header>
-
         <div><i class="fas fa-film"></i>Movies and TV</div>
-
-
       </header>
       <ul class="lists" id="movies1" data-category_id="1" ondrop="drop(event)" ondragover="allowDrop(event)">
         <% for (const item of data) { %>
@@ -56,6 +53,7 @@
         <%}%>
       </ul>
     </article>
+
     <article id="books" data-category_id="2">
       <header>
         <div><i class="fas fa-book-reader"></i>Books</div>
@@ -67,8 +65,8 @@
           <% } %>
         <%}%>
       </ul>
-
     </article>
+
     <article id="restaurants" data-category_id="3">
       <header>
         <div><i class="fas fa-utensils"></i>Restaurants</div>
@@ -80,8 +78,8 @@
           <% } %>
         <%}%>
       </ul>
-
     </article>
+    
     <article id="products" data-category_id="4">
       <header>
         <div><i class="fas fa-shopping-basket"></i>Products</div>
