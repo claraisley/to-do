@@ -156,7 +156,7 @@ app.post('/register', (request, response) => {
 });
 
 const foodWords = ['restaurant', 'fast food', 'sandwich'];
-const bookWords = ['Book', "book", "written by", 'author'];
+const bookWords = ['author', 'Book', "book", "written by"];
 const movieWords = ['AcademyAward', 'Movie'];
 
 
@@ -165,23 +165,13 @@ app.post('/tasks', (request, response) => {
   const item = request.body.input;
   fetchItem(item).then(body => {
     let megaString = '';
-    console.log(`${item} is the search item `); //delete after
     walkObject(JSON.parse(body).queryresult, ({ value }) => {
       if (typeof value === 'string') megaString += " " + value;
     });
-
     if (body.error === "Item not found!") {
       console.log("not found");
-
       //books
-    } else if (bookWords.some(substring => {
-
-      if (megaString.includes(substring)) {
-        console.log(substring); //delete after
-        return megaString.includes(substring);
-      }
-    })) {
-      console.log(`found a book`);
+    } else if (bookWords.some(substring => { megaString.includes(substring) })) {
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['books'], request.session.user_id])
         .then(data => {
@@ -189,11 +179,7 @@ app.post('/tasks', (request, response) => {
           response.redirect('/tasks');
         });
       //movies
-    } else if (movieWords.some(substring => {
-      if (megaString.includes(substring)) console.log(substring);
-      return megaString.includes(substring);
-    })) {
-      console.log(`found a movie`);
+    } else if (movieWords.some(substring => { megaString.includes(substring) })) {
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['film_and_tv_series'], request.session.user_id])
         .then(data => {
@@ -202,7 +188,6 @@ app.post('/tasks', (request, response) => {
         });
       //restaurants
     } else if (foodWords.some(substring => megaString.includes(substring))) {
-      console.log('found a restaurant');
       db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
         [request.body.input, categories['restaurants'], request.session.user_id])
         .then(data => {
@@ -281,13 +266,11 @@ app.post('/update-profile', (request, response) => {
 
 
 // get new task category and pass to tasks table in database
-app.post('/tasks/move', (request, resolve) => {
+app.post('/tasks/move', (request, response) => {
   const { input, category_id } = request.body;
-
-  `INSERT INTO tasks(input, category_id, user_id)
-  VALUES($1,$2,$3)
-  RETURNING *;`;
-
+  db.query(`UPDATE TASKS SET category_id = $1 WHERE input = $2 AND user_id = $3 RETURNING *;`, [parseInt(category_id), input.trim(), parseInt(request.session.user_id)]).then((r) => {
+    response.json({ status: "OK" });
+  })
 })
 
 
