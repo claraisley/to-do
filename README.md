@@ -4,6 +4,13 @@ SMART To-Do List is an autocategorizing, no hassle app with 4 categories, Movies
 
 This repository is the starter code for the project: Students will fork and clone this repository, then build upon it to practice their HTML, CSS, JS, jQuery and AJAX front-end skills, and their Node, Express and PSQL back-end skills.
 
+## Screenshots
+
+!["Index page"] (https://github.com/claraisley/to-do/blob/readme/docs/index-page.png?raw=true)
+!["Register Modal"] (https://github.com/claraisley/to-do/blob/readme/docs/regiester-modal.png?raw=true)
+!["Tasks page"] (https://github.com/claraisley/to-do/blob/readme/docs/tasks-page.png?raw=true)
+!["Add a task"] (https://github.com/claraisley/to-do/blob/readme/docs/add-task.png?raw=true)
+
 ## Getting Started
 
 1. Fork this repository, then clone your fork of this repository.
