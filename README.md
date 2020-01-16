@@ -6,10 +6,10 @@ This repository is the starter code for the project: Students will fork and clon
 
 ## Screenshots
 
-!["Index page"] (https://github.com/claraisley/to-do/blob/readme/docs/index-page.png?raw=true)
-!["Register Modal"] (https://github.com/claraisley/to-do/blob/readme/docs/regiester-modal.png?raw=true)
-!["Tasks page"] (https://github.com/claraisley/to-do/blob/readme/docs/tasks-page.png?raw=true)
-!["Add a task"] (https://github.com/claraisley/to-do/blob/readme/docs/add-task.png?raw=true)
+![Index page] (https://github.com/claraisley/to-do/blob/readme/docs/index-page.png?raw=true)
+![Register Modal] (https://github.com/claraisley/to-do/blob/readme/docs/regiester-modal.png?raw=true)
+![Tasks page] (https://github.com/claraisley/to-do/blob/readme/docs/tasks-page.png?raw=true)
+![Add a task] (https://github.com/claraisley/to-do/blob/readme/docs/add-task.png?raw=true)
 
 ## Getting Started
 
