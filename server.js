@@ -74,7 +74,7 @@ app.get("/tasks", (request, response) => {
     [request.session.user_id])
     .then((data) => {
       let templateVars = { data: data.rows };
-      res.render("tasks", templateVars);
+      response.render("tasks", templateVars);
     });
 
 });
