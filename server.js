@@ -64,17 +64,25 @@ db.query(`SELECT id, title FROM categories;`).then(data => {
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get('/', (request, response) => {
-  response.render('index');
+  let templateVars = { user: null };
+  response.render('index', templateVars);
 });
 
 
 //GET tasks
 app.get("/tasks", (request, response) => {
-  db.query(`SELECT * FROM tasks WHERE user_id = $1`,
+  let templateVars = {};
+  db.query(`SELECT * FROM users WHERE id = $1`,
     [request.session.user_id])
     .then((data) => {
-      let templateVars = { data: data.rows };
-      response.render("tasks", templateVars);
+      templateVars.user = data.rows[0];
+
+      db.query(`SELECT * FROM tasks WHERE user_id = $1`,
+        [request.session.user_id])
+        .then((data) => {
+          templateVars.data = data.rows;
+          response.render("tasks", templateVars);
+        });
     });
 });
 
@@ -144,12 +152,6 @@ app.post('/register', (request, response) => {
     });
 });
 
-//GET tasks
-app.get('/tasks', (request, response) => {
-  response.render('tasks');
-});
-
-
 const foodWords = ['restaurant', 'fast food', 'sandwich'];
 const bookWords = ['Book', "book", "written by", 'author'];
 const movieWords = ['AcademyAward', 'Movie'];
@@ -181,7 +183,7 @@ app.post('/tasks', (request, response) => {
         [request.body.input, categories['books'], request.session.user_id])
         .then(data => {
           const task = data.rows[0]; //delete after
-          response.json(task);
+          response.redirect('/tasks');
         });
       //movies
     } else if (movieWords.some(substring => {
@@ -193,7 +195,7 @@ app.post('/tasks', (request, response) => {
         [request.body.input, categories['film_and_tv_series'], request.session.user_id])
         .then(data => {
           const task = data.rows[0]; //delete after
-          response.json(task);
+          response.redirect('/tasks');
         });
       //restaurants
     } else if (foodWords.some(substring => megaString.includes(substring))) {
@@ -202,7 +204,7 @@ app.post('/tasks', (request, response) => {
         [request.body.input, categories['restaurants'], request.session.user_id])
         .then(data => {
           const task = data.rows[0]; //delete after
-          response.json(task);
+          response.redirect('/tasks');
         });
       // items
     } else {
@@ -211,7 +213,7 @@ app.post('/tasks', (request, response) => {
         [request.body.input, categories['products'], request.session.user_id])
         .then(data => {
           const task = data.rows[0];
-          response.json(task);
+          response.redirect('/tasks');
         });
     }
   });
@@ -251,6 +253,7 @@ app.post('/update-profile', (request, response) => {
 });
 
 
+
 // Wednesday todo list
 
 // 1. create the user specific task list- join on tasks, categories and users
@@ -268,9 +271,9 @@ app.post('/update-profile', (request, response) => {
 //
 
 //
-const { JSDOM } = require( "jsdom" );
-const { window } = new JSDOM( "" );
-const $ = require( "jquery" )( window );
+const { JSDOM } = require("jsdom");
+const { window } = new JSDOM("");
+const $ = require("jquery")(window);
 
 $(() => {
   // function that drags and drops
@@ -284,7 +287,9 @@ $(() => {
     const category = $(event.target)
       .parent()
       .attr('data-category_id="1"');
-    try {}
+    // try {
+    //   console.log('xunda')
+    // }
     // try {
     //   $.post('/tasks', function (data) {
     //     $(( ".result" ).html( data ))
@@ -299,10 +304,10 @@ $(() => {
     //   });
 
 
-    catch (err) {
-      console.error(err);
-    }
-  })
+    // catch (err) {
+    //   console.error(err);
+    // }
+  });
 
-})
+});
 
