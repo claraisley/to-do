@@ -1,29 +1,31 @@
-
-
 <nav class="navbar navbar-dark bg-dark">
   <div class="title">
-  <a class="navbar-brand">SMART To-Do</a>
+    <a class="navbar-brand">SMART To-Do</a>
     <i class="fas fa-check"></i>
   </div>
-  <% if( user ) { %>
-    <span class="nav-item navbar-text"><%= user.name %></span>
-    <div class="nav-buttons">
-      <div class = "update">
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#UpdateModal">Update Profile</button>
-        <%- include('update-profile') %>
-      </div>
+
+  <div class="nav-buttons">
+    <% if( user ) { %>
+    <div class = "update">
+      <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#UpdateModal">Update Profile</button>
+      <%- include('update-profile') %>
+    </div>
 
       <div class = "add-task">
         <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#add-task-modal">Add Task</button>
         <%- include('add-task') %>
-        </div>
+      </div>
 
         <div class = "logout">
-        <form class="logout-form" action="sessions/logout" method="POST">
-          <button type="submit" class="btn btn-outline-warning">Logout</button>
-        </form>
-        </div>
-    </div>
-  <% } %>
 
+          <form class="logout-form" action="/logout" method="POST">
+          <button type="submit" class="btn btn-outline-warning">Logout</button>
+          </form>
+        </div>
+
+        <div class="user-name">
+          <span class="nav-item navbar-text">Hey, <%= user.name %>!</span>
+        </div>
+      <% } %>
+  </div>
 </nav>
