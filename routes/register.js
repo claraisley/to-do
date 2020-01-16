@@ -19,7 +19,7 @@ module.exports = (db) => {
   });
 
   //POST register
-  router.post('/register', (request, response) => {
+  router.post('/', (request, response) => {
     const email = request.body.email;
     const password = request.body.password;
     const salt = bcrypt.genSaltSync(10);

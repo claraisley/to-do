@@ -4,26 +4,12 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const cookieSession = require('cookie-session');
 const { walkObject } = require('walk-object');
-const fetchItem = require('./lib/fetch-item.js');
+const {fetchItem } = require('../lib/fetch-item.js');
 
 
 module.exports = (db) => {
-  // load login/register page
-  router.get('/', (request, response) => {
-    // check if user is logged in
-    if (request.session.user_id) {
-      response.redirect('/tasks');
-
-    } else {
-      let templateVars = {
-        user: { id: undefined, name: null }
-      };
-      response.render('../views/tasks', templateVars);
-    }
-  });
-
   //GET tasks
-  router.get("/tasks", (request, response) => {
+  router.get("/", (request, response) => {
     let templateVars = {};
     db.query(`SELECT * FROM users WHERE id = $1`,
       [request.session.user_id])
@@ -39,13 +25,12 @@ module.exports = (db) => {
       });
   });
 
+  const movieWords = ['AcademyAward', 'Movie'];
   const foodWords = ['restaurant', 'fast food', 'sandwich'];
   const bookWords = ['Book', "book", "written by", 'author'];
-  const movieWords = ['AcademyAward', 'Movie'];
-
 
   //POST tasks
-  router.post('/tasks', (request, response) => {
+  router.post('/', (request, response) => {
     const item = request.body.input;
     fetchItem(item).then(body => {
       let megaString = '';
@@ -56,6 +41,19 @@ module.exports = (db) => {
 
       if (body.error === "Item not found!") {
         console.log("not found");
+
+        //movies
+      } else if (movieWords.some(substring => {
+        if (megaString.includes(substring)) console.log(substring);
+        return megaString.includes(substring);
+      })) {
+        console.log(`found a movie`);
+        db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
+          [request.body.input, categories['film_and_tv_series'], request.session.user_id])
+          .then(data => {
+            const task = data.rows[0]; //delete after
+            response.redirect('/tasks');
+          });
 
         //books
       } else if (bookWords.some(substring => {
@@ -68,18 +66,6 @@ module.exports = (db) => {
         console.log(`found a book`);
         db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
           [request.body.input, categories['books'], request.session.user_id])
-          .then(data => {
-            const task = data.rows[0]; //delete after
-            response.redirect('/tasks');
-          });
-        //movies
-      } else if (movieWords.some(substring => {
-        if (megaString.includes(substring)) console.log(substring);
-        return megaString.includes(substring);
-      })) {
-        console.log(`found a movie`);
-        db.query(`INSERT INTO tasks(input, category_id, user_id) VALUES($1,$2,$3) RETURNING *;`,
-          [request.body.input, categories['film_and_tv_series'], request.session.user_id])
           .then(data => {
             const task = data.rows[0]; //delete after
             response.redirect('/tasks');

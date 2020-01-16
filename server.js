@@ -1,7 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
 
-// Web server config
+// Web server config9
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.ENV || "development";
 const express = require("express");
@@ -44,7 +44,6 @@ app.use(cookieSession({
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const loginRoutes = require('./routes/login');
-const logoutRoutes = require('./routes/logout');
 const updateProfileRoutes = require('./routes/update-profile');
 const registerRoutes = require('./routes/register');
 const tasksRoutes = require('./routes/tasks');
@@ -54,10 +53,9 @@ const tasksRoutes = require('./routes/tasks');
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use('/sessions', loginRoutes(db));
-app.use('/sessions', logoutRoutes());
-app.use('/sessions', updateProfileRoutes(db));
-app.use('/sessions', registerRoutes(db));
-app.use('/sessions', tasksRoutes(db));
+app.use('/update-profile', updateProfileRoutes(db));
+app.use('/register', registerRoutes(db));
+app.use('/tasks', tasksRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 //home
@@ -70,8 +68,3 @@ app.get('/', (request, response) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-
-
-
-

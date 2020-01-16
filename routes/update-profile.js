@@ -19,7 +19,7 @@ module.exports = (db) => {
   });
 
   //post update profile
-  router.post('/update-profile', (request, response) => {
+  router.post('/', (request, response) => {
     const password = request.body.password;
     const newPassword = request.body["new-password"];
     const salt = bcrypt.genSaltSync(10);

@@ -47,5 +47,13 @@ module.exports = (db) => {
       });
   });
 
+
+  //POST Logout
+  router.post('/logout', (request, response) => {
+    // eslint-disable-next-line camelcase
+    request.session.user_id = null;
+    response.redirect('/');
+  });
+
   return router;
 };
