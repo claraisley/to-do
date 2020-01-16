@@ -25,9 +25,9 @@ module.exports = (db) => {
       });
   });
 
-  const movieWords = ['AcademyAward', 'Movie'];
-  const foodWords = ['restaurant', 'fast food', 'sandwich'];
-  const bookWords = ['Book', "book", "written by", 'author'];
+  const foodWords = ['restaurant', 'fast food', 'sandwich', 'yelp', 'menu'];
+  const movieWords = ['Academy Award', 'Movie', 'netflix', 'tv', 'imdb', 'film', 'directed by', 'starring'];
+  const bookWords = ['Book', "book", "written by", 'author', 'published', 'fiction', 'novel'];
 
   //POST tasks
   router.post('/', (request, response) => {
@@ -98,6 +98,14 @@ module.exports = (db) => {
       categories[row.title] = row.id;
     }
   });
+
+  // get new task category and pass to tasks table in database
+router.post('/move', (request, response) => {
+  const { input, category_id } = request.body;
+  db.query(`UPDATE TASKS SET category_id = $1 WHERE input = $2 AND user_id = $3 RETURNING *;`, [parseInt(category_id), input.trim(), parseInt(request.session.user_id)]).then((r) => {
+    response.json({ status: "OK" });
+  })
+})
 
   return router;
 };
