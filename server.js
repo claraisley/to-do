@@ -282,19 +282,12 @@ app.post('/update-profile', (request, response) => {
 
 // get new task category and pass to tasks table in database
 app.post('/tasks/move', (request, resolve) => {
-  console.log(request.body)
-//   const request.body = { input, category_id };
+  const { input, category_id } = request.body;
 
-//   `UPDATE tasks
-//   SET category_id = $1
-//   WHERE user_id = $2 AND input = $3
-//   RETURNING *;
-//   `;
-// try {
+  `INSERT INTO tasks(input, category_id, user_id)
+  VALUES($1,$2,$3)
+  RETURNING *;`;
 
-// } catch (err) {
-
-// }
 })
 
 
