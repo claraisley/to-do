@@ -26,17 +26,17 @@ This repository is the starter code for the project: Students will fork and clon
 - PG 6.x
 - bcrypt 3.0.7 or above
 - Bindings 1.5.0 or above
-- Body-parser 1.19.0
-- Bootstrap 4.4.1 
-- Chalk 2.4.2
-- Cookie-session 1.4.0
-- Dotenv 2.0.0
-- Ejs 2.6.2
-- Express 4.17.1
-- Jquery 3.4.1
-- Jsdom 16.0.0
-- Morgan 1.9.1
-- Node-sass-middleware 0.11.0
-- Pg-native 3.0.0
-- Request-promise-native 1.0.8
-- Walk-object 4.0.0
+- Body-parser 1.19.0 or above
+- Bootstrap 4.4.1 or above
+- Chalk 2.4.2 or above
+- Cookie-session 1.4.0 or above
+- Dotenv 2.0.0 or above
+- Ejs 2.6.2 or above
+- Express 4.17.1 or above
+- Jquery 3.4.1 or above
+- Jsdom 16.0.0 or above
+- Morgan 1.9.1 or above
+- Node-sass-middleware 0.11.0 or above
+- Pg-native 3.0.0 or above
+- Request-promise-native 1.0.8 or above
+- Walk-object 4.0.0 or above
