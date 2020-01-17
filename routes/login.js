@@ -37,7 +37,6 @@ module.exports = (db) => {
           request.session.user_id = user.id;
           response.redirect('/tasks');
         }
-        response.json({ user });
       })
       .catch(err => {
         // render login with error
