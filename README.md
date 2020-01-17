@@ -6,10 +6,10 @@ This repository is the starter code for the project: Students will fork and clon
 
 ## Screenshots
 
-![Index page] (https://github.com/claraisley/to-do/blob/readme/docs/index-page.png?raw=true)
-![Register Modal] (https://github.com/claraisley/to-do/blob/readme/docs/regiester-modal.png?raw=true)
-![Tasks page] (https://github.com/claraisley/to-do/blob/readme/docs/tasks-page.png?raw=true)
-![Add a task] (https://github.com/claraisley/to-do/blob/readme/docs/add-task.png?raw=true)
+![Index page](https://github.com/claraisley/to-do/blob/readme/docs/index-page.png?raw=true)
+![Register Modal](https://github.com/claraisley/to-do/blob/readme/docs/regiester-modal.png?raw=true)
+![Tasks page](https://github.com/claraisley/to-do/blob/readme/docs/tasks-page.png?raw=true)
+![Add a task](https://github.com/claraisley/to-do/blob/readme/docs/add-task.png?raw=true)
 
 ## Getting Started
 
@@ -24,3 +24,19 @@ This repository is the starter code for the project: Students will fork and clon
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+- bcrypt 3.0.7 or above
+- Bindings 1.5.0 or above
+- Body-parser 1.19.0
+- Bootstrap 4.4.1 
+- Chalk 2.4.2
+- Cookie-session 1.4.0
+- Dotenv 2.0.0
+- Ejs 2.6.2
+- Express 4.17.1
+- Jquery 3.4.1
+- Jsdom 16.0.0
+- Morgan 1.9.1
+- Node-sass-middleware 0.11.0
+- Pg-native 3.0.0
+- Request-promise-native 1.0.8
+- Walk-object 4.0.0
