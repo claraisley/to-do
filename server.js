@@ -56,6 +56,7 @@ app.use('/sessions', loginRoutes(db));
 app.use('/update-profile', updateProfileRoutes(db));
 app.use('/register', registerRoutes(db));
 app.use('/tasks', tasksRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 //home
@@ -68,7 +69,6 @@ app.get('/', (request, response) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
 
 
 
